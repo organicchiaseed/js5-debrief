@@ -11,6 +11,20 @@ const postBtn = document.getElementById("post-btn");
 // b) second .then() : finally, chain another .then that takes the output and returns it. Don't forget to console log the reponse to see it on the browser console.
 // c) write a .catch() to handle an error, if it occurs
 
+const getData = fetch('https://reqres.in/api/users?page=2')
+    .then(response => {
+        if(response.ok){
+            return response.json()
+        }
+        throw new Error('request failed');
+        })
+    .then(jsonResponse => {
+        console.log(jsonResponse)
+        })
+    .catch(error => {
+    console.log(error)
+    });
+
 // 2. Create a fetch SET method: create a function called sendData
 
 // hints: optional, can do on your own if you want
@@ -26,3 +40,20 @@ const postBtn = document.getElementById("post-btn");
 // Buttons eventListeners
 getBtn.addEventListener("click", getData);
 postBtn.addEventListener("click", sendData);
+
+const sendData = fetch('https://reqres.in/api/users', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'},
+        body: JSON.stringify({name: 'morpheus', job: 'leader'})
+    .then(response => {
+        if(response.ok){
+            return response.json()
+        }
+        throw new Error('error');
+    }, networkError => {
+        console.log(networkError.message)
+    }).then(jsonResponse => {
+        
+    })
+})
